@@ -38,29 +38,22 @@ plt.savefig("S_vs_time.png", dpi=300)
 plt.show()
 
 
-
-# ============================================================
-# Growth rate calculation and Lineweaver–Burk analysis
-# ============================================================
-
-# ---- Compute mu for each interval ----
 dt = t_end - t_start
 dXdt = (X_end - X_start) / dt
-mu = dXdt / X_start   # since X_min = X_start
+mu = dXdt / X_start   
 
 print("\nInterval |   S (g/L) |   mu (1/h)")
 for i in range(len(S)):
     print(f"{i+1:>8} | {S[i]:>8.1f} | {mu[i]:>9.4f}")
 
-# ---- Select exponential phase intervals ----
-# From your plot, likely intervals 2–5
-exp_intervals = [2, 3, 4, 5]   # 1-based numbering
+
+exp_intervals = [2, 3, 4, 5]   
 exp_idx = [k-1 for k in exp_intervals]
 
 S_exp = S[exp_idx]
 mu_exp = mu[exp_idx]
 
-# ---- Lineweaver–Burk fit ----
+
 x = 1.0 / S_exp
 y = 1.0 / mu_exp
 
@@ -74,7 +67,7 @@ print(f"Used intervals: {exp_intervals}")
 print(f"mu_max = {mu_max:.5f} 1/h")
 print(f"K_s    = {K_s:.5f} g/L")
 
-# ---- Plot Lineweaver–Burk ----
+
 plt.figure(figsize=(7,4.5))
 plt.scatter(x, y, s=60, label="Data (exp phase)")
 x_line = np.linspace(min(x)*0.9, max(x)*1.1, 200)
